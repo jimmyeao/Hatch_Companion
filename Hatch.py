@@ -114,7 +114,7 @@ def showimage():
     else:
         return 'Not a POST request'
 
-            
+    print("Matched image_type:", image_type)       
     disp.ShowImage(image)    
     return 'Showing image: {}'.format(image_type)
 
