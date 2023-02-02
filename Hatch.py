@@ -90,25 +90,29 @@ def index():
 def showimage():
     global stop_animation
     stop_animation = True
-    image_type = request.form.get('image_type')
-    if image_type == 'dnd':
-        text3 = request.form.get('text1')
-        text4 = request.form.get('text2')
-        image = create_dndimage(text3, text4)
-    elif image_type == 'busy':
-        text1 = request.form.get('text1')
-        image = create_busyimage(text1)
-    elif image_type == 'available':
-        text1 = request.form.get('text1')
-        image = create_availableimage(text1)
-    elif image_type == 'away':
-        text1 = request.form.get('text1')
-        image = create_awayimage(text1)  
-    elif image_type == 'offline':
-        text1 = request.form.get('text1')
-        image = create_offline(text1)         
-    elif image_type == 'test':
-        return 'ok'
+    if request.method == 'POST':
+        image_type = request.form.get('image_type')
+        if image_type == 'dnd':
+            text3 = request.form.get('text1')
+            text4 = request.form.get('text2')
+            image = create_dndimage(text3, text4)
+        elif image_type == 'busy':
+            text1 = request.form.get('text1')
+            image = create_busyimage(text1)
+        elif image_type == 'available':
+            text1 = request.form.get('text1')
+            image = create_availableimage(text1)
+        elif image_type == 'away':
+            text1 = request.form.get('text1')
+            image = create_awayimage(text1)  
+        elif image_type == 'offline':
+            text1 = request.form.get('text1')
+            image = create_offline(text1)
+        else:
+            return 'Invalid image_type'
+    else:
+        return 'Not a POST request'
+
             
     disp.ShowImage(image)    
     return 'Showing image: {}'.format(image_type)
@@ -118,4 +122,5 @@ if __name__ == '__main__':
     text1 = ('Available')
     image = create_availableimage(text1)
     disp.ShowImage(image)    
-    app.run(host='0.0.0.0', port=5000)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=5000)
