@@ -1,1 +1,4 @@
-curl https://raw.githubusercontent.com/jimmyeao/Hatch_Companion/main/install.sh | bash
+git clone https://github.com/jimmyeao/Hatch_Companion.git
+cd Hatch_Companion
+sh install.sh
+
