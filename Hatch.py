@@ -86,4 +86,7 @@ def showimage():
 
 
 if __name__ == '__main__':
+    text1 = ('Available')
+    image = create_availableimage(text1)
+    disp.ShowImage(image)    
     app.run(host='0.0.0.0', port=5000)
