@@ -5,7 +5,7 @@ import logging
 import spidev as SPI
 import flask
 from flask import Flask, request
-sys.path.append("..")
+
 from lib import LCD_1inch28
 from PIL import Image,ImageDraw,ImageFont
 
