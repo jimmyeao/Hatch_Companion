@@ -14,7 +14,8 @@ cd ~/
 sudo apt-get install python3-pip -y
 sudo apt-get install python3-pil -y
 sudo apt-get install python3-numpy -y
-sudo pip3 install RPi.GPIO -y
-sudo pip3 install spidev -y
+sudo pip3 install RPi.GPIO
+sudo pip3 install spidev
+sudo pip3 install waitress 
 wget https://github.com/jimmyeao/Hatch_Companion/blob/main/Hatch.py
 python3 Hatch.py
