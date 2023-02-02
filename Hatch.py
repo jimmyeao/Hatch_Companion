@@ -28,6 +28,17 @@ disp.Init()
 disp.clear()
    
 ################# Definitions for screens ########################        
+def create_startup_animation(disp):
+    animation_frames = []
+    font = ImageFont.truetype("../Font/Font02.ttf", 35)
+    for i in range(0, 360, 5):
+        frame = Image.new("RGB", (disp.width, disp.height), "BLACK")
+        draw = ImageDraw.Draw(frame)
+        draw.arc((25, 25, 215, 215), 0, 360, fill=(255, 255, 255), width=5)
+        draw.arc((25, 25, 215, 215), 0, i, fill=(0, 255, 0), width=5)
+        draw.text((disp.width // 2 - 75, disp.height // 2 - 20), "Loading...", fill=(255, 255, 255), font=font)
+        animation_frames.append(frame)
+    return animation_frames
 def create_dndimage(text3, text4, color = (255,255,255)):
     dndimage = Image.new("RGB", (disp.width, disp.height), "BLACK")
     draw = ImageDraw.Draw(dndimage)
@@ -79,8 +90,25 @@ def create_offline(text1, color = (68,71,145)):
     text_width, text_height = draw.textsize(text1, font=Font3)
     draw.text(((disp.width-text_width)/2, (disp.height-text_height)/2), text1, fill = color,font = Font3)
     return offline.rotate(0)     
-    time.sleep(1.5)
-
+    
+    
+def waitingimage(text1, color = (68,71,145)):
+    waiting = Image.new("RGB", (disp.width, disp.height), "BLACK")
+    draw = ImageDraw.Draw(waiting)
+    draw.arc((1,1,239,239),0, 360, fill = (68,71,145),width = 20)
+    draw.arc((2,2,238,238),0, 360, fill = (68,71,145),width = 20)
+    draw.arc((3,3,237,237),0, 360, fill = (68,71,145),width = 20)
+    Font3 = ImageFont.truetype("../Font/Font02.ttf",32)
+    text_width, text_height = draw.textsize(text1, font=Font3)
+    draw.text(((disp.width-text_width)/2, (disp.height-text_height)/2), text1, fill = color,font = Font3)
+    return waiting.rotate(0)     
+ 
+        
+def show_startup_animation(disp):
+    animation_frames = create_startup_animation(disp)
+    for frame in animation_frames:
+        disp.ShowImage(frame)
+        time.sleep(0)
 # default route if someone browses, should maybe have some instructions??
 @app.route('/')
 def index():
@@ -117,11 +145,13 @@ def showimage():
     print("Matched image_type:", image_type)       
     disp.ShowImage(image)    
     return 'Showing image: {}'.format(image_type)
-
+    time.sleep(1.5)
 ############ main ################
 if __name__ == '__main__':
-    text1 = ('Available')
-    image = create_availableimage(text1)
-    disp.ShowImage(image)    
+    show_startup_animation(disp)
+    
+    text1 = ('Waiting...')
+    image = waitingimage(text1) 
+    disp.ShowImage(image)   
     from waitress import serve
     serve(app, host="0.0.0.0", port=5000)
