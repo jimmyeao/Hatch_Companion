@@ -27,7 +27,7 @@ disp.Init()
 # Clear display.
 disp.clear()
    
-        
+################# Definitions for screens ########################        
 def create_dndimage(text3, text4, color = (255,255,255)):
     dndimage = Image.new("RGB", (disp.width, disp.height), "BLACK")
     draw = ImageDraw.Draw(dndimage)
@@ -81,11 +81,12 @@ def create_offline(text1, color = (68,71,145)):
     return offline.rotate(0)     
     time.sleep(1.5)
 
-
+# default route if someone browses, should maybe have some instructions??
 @app.route('/')
 def index():
     return 'Hello World'
 
+# triggers when posting to /showimage
 @app.route('/showimage', methods=['POST'])
 def showimage():
     global stop_animation
@@ -117,7 +118,7 @@ def showimage():
     disp.ShowImage(image)    
     return 'Showing image: {}'.format(image_type)
 
-
+############ main ################
 if __name__ == '__main__':
     text1 = ('Available')
     image = create_availableimage(text1)
