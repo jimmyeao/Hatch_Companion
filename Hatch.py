@@ -102,7 +102,17 @@ def waitingimage(text1, color = (68,71,145)):
     text_width, text_height = draw.textsize(text1, font=Font3)
     draw.text(((disp.width-text_width)/2, (disp.height-text_height)/2), text1, fill = color,font = Font3)
     return waiting.rotate(0)     
- 
+
+def create_onthephone_image(text1, color=(255, 255, 255)):
+    onthephone = Image.new("RGB", (disp.width, disp.height), "BLACK")
+    draw = ImageDraw.Draw(onthephone)
+    draw.ellipse((10, 10, disp.width-10, disp.height-10), fill=(188,47,73))
+    Font3 = ImageFont.truetype("Font/Font02.ttf", 32)
+    draw.text((30, 100), "On             the", fill=color, font=Font3)
+    draw.text((90, 145), "Phone", fill=color, font=Font3)
+    phone_image = Image.open("phone.png").resize((80, 80), Image.ANTIALIAS).rotate(90)
+    onthephone.paste(phone_image, (80, 60), phone_image)
+    return onthephone.rotate(0) 
         
 def show_startup_animation(disp):
     animation_frames = create_startup_animation(disp)
@@ -137,6 +147,9 @@ def showimage():
         elif image_type == 'offline':
             text1 = request.form.get('text1')
             image = create_offline(text1)
+        elif image_type == 'onthephone':
+            text1 = request.form.get('text1')
+            image = create_onthephone_image(text1)
         else:
             return 'Invalid image_type'
     else:
