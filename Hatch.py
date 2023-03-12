@@ -144,7 +144,7 @@ def create_onthephone_image(text1, color=(255, 255, 255)):
     draw = ImageDraw.Draw(onthephone)
     draw.ellipse((10, 10, disp.width-10, disp.height-10), fill=(188,47,73))
     draw.text((30, 100), "On             the", fill=color, font=FONT_03)
-    draw.text((90, 145), "Phone", fill=color, font=FONT_02)
+    draw.text((90, 145), "Phone", fill=color, font=FONT_03)
     phone_image = Image.open("phone.png").resize((80, 80), resample=Image.ANTIALIAS).rotate(90)
     onthephone.paste(phone_image, (80, 60), phone_image)
     return onthephone.rotate(0)
